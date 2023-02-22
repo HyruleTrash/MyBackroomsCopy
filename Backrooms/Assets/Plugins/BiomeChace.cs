@@ -1,8 +1,8 @@
 ﻿using UnityEngine.Audio;
 using UnityEngine;
 [System.Serializable]
-public class Biome
+public class BiomeChance
 {
     public string BiomeName;
-    public int MaxAmountChunks;
+    public int Chance;
 }

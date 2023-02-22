@@ -4,5 +4,5 @@ using UnityEngine;
 public class Chunk
 {
     public GameObject ChunkObject;
-    public Biome[] Chances;
+    public BiomeChance[] Chances;
 }

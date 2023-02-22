@@ -123,6 +123,65 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &58393494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2378559934720008658, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.888
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378559934720008660, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
 --- !u!1 &441337701
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,22 +215,28 @@ MonoBehaviour:
   - ChunkObject: {fileID: 1126575079584258670, guid: 895d1b94a955d4c0383cabbd0c7bf057, type: 3}
     Chances:
     - BiomeName: default
-      Chance: 50
+      Chance: 20
     - BiomeName: Pillars
       Chance: 0
   - ChunkObject: {fileID: 2803190014333583614, guid: abbff129c8bda4d89996338b92cdbcad, type: 3}
     Chances:
     - BiomeName: default
-      Chance: 50
+      Chance: 80
     - BiomeName: Pillars
-      Chance: 50
+      Chance: 10
   - ChunkObject: {fileID: 7216173035905359406, guid: c4c09d40f673e4733a0272dd0de66718, type: 3}
     Chances:
     - BiomeName: default
       Chance: 0
     - BiomeName: Pillars
-      Chance: 50
+      Chance: 90
+  Biomes:
+  - BiomeName: default
+    MaxAmountChunks: 70
+  - BiomeName: Pillars
+    MaxAmountChunks: 20
   Distance: {x: 10, y: 20, z: 10}
+  size: 80
 --- !u!4 &441337703
 Transform:
   m_ObjectHideFlags: 0

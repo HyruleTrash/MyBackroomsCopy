@@ -45,6 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b429adefd4464bbfb271e51a2c63082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BiomeName: default
+  materials:
+  - {fileID: 2100000, guid: 1650b1519c3a046a6b8a6f512e63c241, type: 2}
+  - {fileID: 2100000, guid: 21478c36491cb4416a86a4233dbd0ee2, type: 2}
 --- !u!1 &4827384832190937404
 GameObject:
   m_ObjectHideFlags: 0
