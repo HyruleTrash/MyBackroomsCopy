@@ -10,9 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public List<Item> Items;
-    public GameObject[] ItemsVisualHold;
-
     public float walkingSpeedNormal = 0.15f;
     public float MaxwalkingSpeedNormal = 5f;
     public float SlowDownHNormal = 0.1f;
