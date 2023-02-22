@@ -6,18 +6,22 @@ public class ChunkInfo : MonoBehaviour
 {
     public string BiomeName = "default";
     public Material[] materials;
+    public bool DebugBiomeColours = false;
 
     private void Start()
     {
-        foreach (Transform child in this.transform)
+        if (DebugBiomeColours)
         {
-            if (BiomeName == "default")
+            foreach (Transform child in this.transform)
             {
-                child.GetComponent<MeshRenderer>().material = materials[0];
-            }
-            else
-            {
-                child.GetComponent<MeshRenderer>().material = materials[1];
+                if (BiomeName == "default")
+                {
+                    child.GetComponent<MeshRenderer>().material = materials[0];
+                }
+                else
+                {
+                    child.GetComponent<MeshRenderer>().material = materials[1];
+                }
             }
         }
     }

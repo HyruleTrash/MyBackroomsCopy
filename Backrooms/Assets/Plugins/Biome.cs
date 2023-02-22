@@ -4,5 +4,6 @@ using UnityEngine;
 public class Biome
 {
     public string BiomeName;
+    public int ChanceOfBiome;
     public int MaxAmountChunks;
 }
