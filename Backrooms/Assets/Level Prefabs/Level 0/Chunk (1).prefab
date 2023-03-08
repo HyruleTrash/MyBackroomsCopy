@@ -47,9 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BiomeName: default
+  DistanceFromOriginPoint: 0
   materials:
   - {fileID: 2100000, guid: 1650b1519c3a046a6b8a6f512e63c241, type: 2}
   - {fileID: 2100000, guid: 21478c36491cb4416a86a4233dbd0ee2, type: 2}
+  DebugBiomeColours: 1
 --- !u!1 &1464319776259916353
 GameObject:
   m_ObjectHideFlags: 0

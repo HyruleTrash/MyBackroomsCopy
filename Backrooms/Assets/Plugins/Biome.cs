@@ -5,5 +5,5 @@ public class Biome
 {
     public string BiomeName;
     public int ChanceOfBiome;
-    public int MaxAmountChunks;
+    public int[] MaxAmountChunks = new int[2];
 }

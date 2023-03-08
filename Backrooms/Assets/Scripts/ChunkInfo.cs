@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChunkInfo : MonoBehaviour
 {
     public string BiomeName = "default";
+    public int DistanceFromOriginPoint;
     public Material[] materials;
     public bool DebugBiomeColours = false;
 
