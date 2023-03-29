@@ -240,10 +240,10 @@ MonoBehaviour:
   Biomes:
   - BiomeName: default
     ChanceOfBiome: 70
-    MaxAmountChunks: 0a0000001e000000
+    MaxAmountChunks: 070000000e000000
   - BiomeName: Pillars
     ChanceOfBiome: 30
-    MaxAmountChunks: 0300000005000000
+    MaxAmountChunks: 0500000007000000
   tempVisualizer: {fileID: 2602092784120847277, guid: 7f73009daca214017bbb659eb45ea610, type: 3}
   Distance: {x: 10, y: 20, z: 10}
   size: 80

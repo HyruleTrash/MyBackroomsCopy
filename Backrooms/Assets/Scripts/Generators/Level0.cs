@@ -95,7 +95,7 @@ public class Level0 : MonoBehaviour
             }
 
             // Generate a random number between 0 and the total weight
-            int randomNumber = UnityEngine.Random.Range(0, totalWeight);
+            int randomNumber = Random.Range(0, totalWeight);
 
             // Iterate through the matching chunks and subtract their chance from the random number until it becomes less than or equal to 0
             foreach (Chunk chunk in matchingChunks)
@@ -105,9 +105,12 @@ public class Level0 : MonoBehaviour
                     if (chance.BiomeName == biomeName)
                     {
                         randomNumber -= chance.Chance;
-
-                        if (randomNumber <= 0)
+                        if (randomNumber <= 0 && chance.Chance != 0)
                         {
+                            if (chunk.ChunkObject.gameObject.name.Contains("(1)") && biomeName == "Pillars")
+                            {
+                                Debug.Log(chance.Chance);
+                            }
                             return chunk;
                         }
                     }
@@ -118,7 +121,17 @@ public class Level0 : MonoBehaviour
             throw new System.Exception("No chunk found for biome " + biomeName + ".");
         }
     }
-
+    public int GetChanceByBiomeName(string BiomeName)
+    {
+        for (int i = 0; i < Biomes.Length; i++)
+        {
+            if (Biomes[i].BiomeName == BiomeName)
+            {
+                return Biomes[i].ChanceOfBiome;
+            }
+        }
+        return 0;
+    }
     public bool DoesSpawnChunksContainBiome(string BiomeName)
     {
         for (int i = 0; i < SpawnChunks.Count; i++)
@@ -215,19 +228,31 @@ public class Level0 : MonoBehaviour
                     FoundChunk.Biome = chunk.Biome;
                     FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
                     SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)] = FoundChunk;
-                    // Debug.Log(SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)].Biome);
                     if (FoundChunk.DistanceFromOrigin - 1 > 0)
                     {
                         NextChunks.Add(FoundChunk);
                     }
-                }else if (chunk.DistanceFromOrigin - 1 > FoundChunk.DistanceFromOrigin)
+                }
+                else
                 {
-                    FoundChunk.Biome = chunk.Biome;
-                    FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
-                    SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)] = FoundChunk;
-                    if (FoundChunk.DistanceFromOrigin - 1 > 0)
+                    if (GetChanceByBiomeName(chunk.Biome) < GetChanceByBiomeName(FoundChunk.Biome))
                     {
-                        NextChunks.Add(FoundChunk);
+                        FoundChunk.Biome = chunk.Biome;
+                        FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
+                        SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)] = FoundChunk;
+                        if (FoundChunk.DistanceFromOrigin - 1 > 0)
+                        {
+                            NextChunks.Add(FoundChunk);
+                        }
+                    } else if (chunk.DistanceFromOrigin - 1 > FoundChunk.DistanceFromOrigin)
+                    {
+                        FoundChunk.Biome = chunk.Biome;
+                        FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
+                        SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)] = FoundChunk;
+                        if (FoundChunk.DistanceFromOrigin - 1 > 0)
+                        {
+                            NextChunks.Add(FoundChunk);
+                        }
                     }
                 }
 
@@ -249,52 +274,6 @@ public class Level0 : MonoBehaviour
 
     void Start()
     {
-        /*
-        int BiomeID = Random.Range(0, Biomes.Length);
-        int CurrentAmountOfChunks = 0;
-        for (int i = 0 - (size / 2); i < ( size / 2 ); i++)
-        {
-            for (int j = 0 - (size / 2); j < (size / 2); j++)
-            {
-                CurrentAmountOfChunks++;
-
-
-                int RandValue = Random.Range(0, 100);
-                int previousPercentages = 0;
-                int ID = 0;
-                bool ChunkFound = false;
-                for (int x = 0; x < Chunks.Length; x++)
-                {
-                    // get Correct Biome
-                    for (int y = 0; y < Chunks[x].Chances.Length; y++)
-                    {
-                        if (Chunks[x].Chances[y].BiomeName == Biomes[BiomeID].BiomeName && !ChunkFound)
-                        {
-                            previousPercentages += Chunks[x].Chances[y].Chance;
-                            if (RandValue <= previousPercentages)
-                            {
-                                ID = x;
-                                ChunkFound = true;
-                                break;
-                            }
-                        }
-                    }
-                    
-                }
-                //ID = Random.Range(0, Chunks.Length);
-                int Dir = Random.Range(-1, 2);
-                GameObject Chunk = Instantiate(Chunks[ID].ChunkObject, new Vector3(i * Distance.x, 0, j * Distance.z), Quaternion.Euler(0,90f*Dir, 0));
-                Chunk.GetComponent<ChunkInfo>().BiomeName = Biomes[BiomeID].BiomeName;
-
-
-                if (Biomes[BiomeID].MaxAmountChunks < CurrentAmountOfChunks)
-                {
-                    BiomeID = Random.Range(0, Biomes.Length);
-                    CurrentAmountOfChunks = 0;
-                }
-            }
-        }*/
-
         // Make spawn Chunks
         for (int i = 0 - (size / 2); i < (size / 2); i++)
         {
@@ -342,6 +321,10 @@ public class Level0 : MonoBehaviour
         // Generate Chunks
         for (int i = 0; i < SpawnChunks.Count; i++)
         {
+            if (SpawnChunks[i].Biome == "temp")
+            {
+                SpawnChunks[i].Biome = "default";
+            }
             Chunk RandomChunk = GetRandomChunk(Chunks, SpawnChunks[i].Biome);
             GameObject Chunk = Instantiate(RandomChunk.ChunkObject, SpawnChunks[i].Position, SpawnChunks[i].Rotation);
             Chunk.GetComponent<ChunkInfo>().BiomeName = SpawnChunks[i].Biome;
