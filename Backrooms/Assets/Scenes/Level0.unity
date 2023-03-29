@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.990566, g: 0.9117664, b: 0.4999555, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.007
@@ -222,13 +222,13 @@ MonoBehaviour:
   - ChunkObject: {fileID: 1126575079584258670, guid: 895d1b94a955d4c0383cabbd0c7bf057, type: 3}
     Chances:
     - BiomeName: default
-      Chance: 20
+      Chance: 30
     - BiomeName: Pillars
       Chance: 0
   - ChunkObject: {fileID: 2803190014333583614, guid: abbff129c8bda4d89996338b92cdbcad, type: 3}
     Chances:
     - BiomeName: default
-      Chance: 80
+      Chance: 70
     - BiomeName: Pillars
       Chance: 10
   - ChunkObject: {fileID: 7216173035905359406, guid: c4c09d40f673e4733a0272dd0de66718, type: 3}
@@ -239,11 +239,11 @@ MonoBehaviour:
       Chance: 90
   Biomes:
   - BiomeName: default
-    ChanceOfBiome: 50
-    MaxAmountChunks: 3200000050000000
+    ChanceOfBiome: 70
+    MaxAmountChunks: 0a0000001e000000
   - BiomeName: Pillars
-    ChanceOfBiome: 50
-    MaxAmountChunks: 1e00000028000000
+    ChanceOfBiome: 30
+    MaxAmountChunks: 0300000005000000
   tempVisualizer: {fileID: 2602092784120847277, guid: 7f73009daca214017bbb659eb45ea610, type: 3}
   Distance: {x: 10, y: 20, z: 10}
   size: 80
