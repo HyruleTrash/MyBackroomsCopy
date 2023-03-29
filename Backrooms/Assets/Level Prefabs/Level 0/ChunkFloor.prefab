@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3205892710745151923}
   - component: {fileID: 8096350616240344164}
   m_Layer: 0
-  m_Name: Chunk (2)
+  m_Name: ChunkFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 1650b1519c3a046a6b8a6f512e63c241, type: 2}
   - {fileID: 2100000, guid: 21478c36491cb4416a86a4233dbd0ee2, type: 2}
-  DebugBiomeColours: 1
+  DebugBiomeColours: 0
 --- !u!1 &4827384832190937404
 GameObject:
   m_ObjectHideFlags: 0
