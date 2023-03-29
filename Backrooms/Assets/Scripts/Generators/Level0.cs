@@ -19,6 +19,7 @@ public class Level0 : MonoBehaviour
         }
     }
 
+    public GameObject[] ChunkRoofTiles;
     public Chunk[] Chunks;
     public Biome[] Biomes;
 
@@ -329,6 +330,7 @@ public class Level0 : MonoBehaviour
             GameObject Chunk = Instantiate(RandomChunk.ChunkObject, SpawnChunks[i].Position, SpawnChunks[i].Rotation);
             Chunk.GetComponent<ChunkInfo>().BiomeName = SpawnChunks[i].Biome;
             Chunk.GetComponent<ChunkInfo>().DistanceFromOriginPoint = SpawnChunks[i].DistanceFromOrigin;
+            GameObject RoofTile = Instantiate(ChunkRoofTiles[0], ChunkRoofTiles[0].transform.position + Chunk.transform.position, ChunkRoofTiles[0].transform.rotation, Chunk.transform);
         }
     }
 }

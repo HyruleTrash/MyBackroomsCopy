@@ -218,6 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48b66c2c22e945fb97ee2683f80ea0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChunkRoofTiles:
+  - {fileID: 2476404539084198939, guid: 4953b63eb7980481f94674d4dd6c39a4, type: 3}
   Chunks:
   - ChunkObject: {fileID: 1126575079584258670, guid: 895d1b94a955d4c0383cabbd0c7bf057, type: 3}
     Chances:
@@ -225,11 +227,15 @@ MonoBehaviour:
       Chance: 10
     - BiomeName: Pillars
       Chance: 0
+    - BiomeName: Empty
+      Chance: 0
   - ChunkObject: {fileID: 897410959626341425, guid: e3800d9a658534c7487e5b22bff125ef, type: 3}
     Chances:
     - BiomeName: default
       Chance: 20
     - BiomeName: Pillars
+      Chance: 0
+    - BiomeName: Empty
       Chance: 0
   - ChunkObject: {fileID: 2803190014333583614, guid: abbff129c8bda4d89996338b92cdbcad, type: 3}
     Chances:
@@ -237,25 +243,34 @@ MonoBehaviour:
       Chance: 70
     - BiomeName: Pillars
       Chance: 20
+    - BiomeName: Empty
+      Chance: 100
   - ChunkObject: {fileID: 7216173035905359406, guid: c4c09d40f673e4733a0272dd0de66718, type: 3}
     Chances:
     - BiomeName: default
       Chance: 0
     - BiomeName: Pillars
       Chance: 70
+    - BiomeName: Empty
+      Chance: 0
   - ChunkObject: {fileID: 1836615488157565931, guid: b60ef53e4b7a542e5b0c802fed9e5f36, type: 3}
     Chances:
     - BiomeName: default
       Chance: 0
     - BiomeName: Pillars
       Chance: 10
+    - BiomeName: Empty
+      Chance: 0
   Biomes:
   - BiomeName: default
-    ChanceOfBiome: 70
+    ChanceOfBiome: 65
     MaxAmountChunks: 070000000e000000
   - BiomeName: Pillars
-    ChanceOfBiome: 30
+    ChanceOfBiome: 25
     MaxAmountChunks: 0500000007000000
+  - BiomeName: Empty
+    ChanceOfBiome: 10
+    MaxAmountChunks: 070000000c000000
   tempVisualizer: {fileID: 2602092784120847277, guid: 7f73009daca214017bbb659eb45ea610, type: 3}
   Distance: {x: 10, y: 20, z: 10}
   size: 80
