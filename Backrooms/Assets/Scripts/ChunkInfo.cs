@@ -8,6 +8,7 @@ public class ChunkInfo : MonoBehaviour
     public int DistanceFromOriginPoint;
     public Material[] materials;
     public bool DebugBiomeColours = false;
+    public int Id = -1;
 
     private void Start()
     {

@@ -189,6 +189,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1075367323}
   m_SourcePrefab: {fileID: 100100000, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+--- !u!1 &58393495 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2378559934720008658, guid: 22b4e4c942a854829872d570648ddb92, type: 3}
+  m_PrefabInstance: {fileID: 58393494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &441337701
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48b66c2c22e945fb97ee2683f80ea0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 58393495}
   ChunkRoofTiles:
   - {fileID: 2944329605969195451, guid: f9c041b99008b4dddb38ffb3ed423b68, type: 3}
   Chunks:
@@ -273,7 +279,11 @@ MonoBehaviour:
     MaxAmountChunks: 070000000c000000
   tempVisualizer: {fileID: 2602092784120847277, guid: 7f73009daca214017bbb659eb45ea610, type: 3}
   Distance: {x: 10, y: 20, z: 10}
-  size: 80
+  sizeSpawnChunks: 40
+  sizeRenderDistance: 24
+  HeighestId: 0
+  LatestCurrentChunkPos: {x: 0, y: 0, z: 0}
+  CurrentChunkPos: {x: 0, y: 0, z: 0}
 --- !u!4 &441337703
 Transform:
   m_ObjectHideFlags: 0

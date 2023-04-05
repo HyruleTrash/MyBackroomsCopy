@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Level0 : MonoBehaviour
 {
@@ -9,15 +11,19 @@ public class Level0 : MonoBehaviour
         public Vector3 Position;
         public Quaternion Rotation;
         public string Biome;
+        public int Id = -1;
         public int DistanceFromOrigin;
 
-        public NewChunk(Vector3 pos, Quaternion rot, string name)
+        public NewChunk(Vector3 pos, Quaternion rot, string name, int Newid)
         {
             Biome = name;
             Rotation = rot;
             Position = pos;
+            Id = Newid;
         }
     }
+
+    public GameObject Player;
 
     public GameObject[] ChunkRoofTiles;
     public Chunk[] Chunks;
@@ -27,9 +33,15 @@ public class Level0 : MonoBehaviour
 
     public Vector3 Distance;
 
-    public int size = 24;
+    public int sizeSpawnChunks = 24;
+    public int sizeRenderDistance = 24;
+    public int HeighestId = 0;
+    public Vector3 LatestCurrentChunkPos;
+    public Vector3 CurrentChunkPos;
 
     List<NewChunk> SpawnChunks = new List<NewChunk>();
+    List<NewChunk> AllChunks = new List<NewChunk>();
+    List<NewChunk> NewChunks = new List<NewChunk>();
 
     List<bool> CurrentBiomeGrowings = new List<bool>();
 
@@ -133,35 +145,35 @@ public class Level0 : MonoBehaviour
         }
         return 0;
     }
-    public bool DoesSpawnChunksContainBiome(string BiomeName)
+    public bool DoesChunksContainBiome(string BiomeName, List<NewChunk> List)
     {
-        for (int i = 0; i < SpawnChunks.Count; i++)
+        for (int i = 0; i < List.Count; i++)
         {
-            if (SpawnChunks[i].Biome == BiomeName)
+            if (List[i].Biome == BiomeName)
             {
                 return true;
             }
         }
         return false;
     }
-    public List<NewChunk> GetAllOfBiomeType(string BiomeName)
+    public List<NewChunk> GetAllOfBiomeType(string BiomeName, List<NewChunk> Chunks)
     {
         List<NewChunk> FoundChunks = new List<NewChunk>();
-        for (int i = 0; i < SpawnChunks.Count; i++)
+        for (int i = 0; i < Chunks.Count; i++)
         {
-            if (SpawnChunks[i].Biome == BiomeName)
+            if (Chunks[i].Biome == BiomeName)
             {
-                FoundChunks.Add(SpawnChunks[i]);
+                FoundChunks.Add(Chunks[i]);
             }
         }
         return FoundChunks;
     }
-    public int GetChunkIDWithSamePosition(Vector3 pos)
+    public int GetChunkListIDWithSamePosition(Vector3 pos, List<NewChunk> List)
     {
         int FoundID = -1;
-        for (int i = 0; i < SpawnChunks.Count; i++)
+        for (int i = 0; i < List.Count; i++)
         {
-            if (SpawnChunks[i].Position == pos)
+            if (List[i].Position == pos)
             {
                 FoundID = i;
                 break;
@@ -169,8 +181,13 @@ public class Level0 : MonoBehaviour
         }
         return FoundID;
     }
+    public Vector3 NearestChunkPosition(Vector3 GivenPos)
+    {
+        Vector3 NearestChunk = new Vector3((int)Math.Round(GivenPos.x / Distance.x, 0), (int)Math.Round(GivenPos.y / Distance.y, 0), (int)Math.Round(GivenPos.z / Distance.z, 0));
+        return NearestChunk;
+    }
 
-    public void GrowBiome(NewChunk chunk)
+    public void GrowBiomeSpawn(NewChunk chunk)
     {
         CurrentBiomeGrowings.Add(false);
 
@@ -188,12 +205,12 @@ public class Level0 : MonoBehaviour
         List<NewChunk> NextChunks = new List<NewChunk>();
         for (int i = 0; i < NearestChunks.Length + 1; i++)
         {
-            NewChunk FoundChunk = new NewChunk(Vector3.zero, new Quaternion(0, 0, 0, 0), "temp");
+            NewChunk FoundChunk = new NewChunk(Vector3.zero, new Quaternion(0, 0, 0, 0), "temp", -1);
             int tempFoundint = -1;
             // Go through all directions + a random one extra
             if (i != NearestChunks.Length)
             {
-                tempFoundint = GetChunkIDWithSamePosition(chunk.Position + NearestChunks[i]);
+                tempFoundint = GetChunkListIDWithSamePosition(chunk.Position + NearestChunks[i], SpawnChunks);
                 if (tempFoundint < SpawnChunks.Count && tempFoundint != -1)
                 {
                     FoundChunk = SpawnChunks[tempFoundint];
@@ -202,15 +219,16 @@ public class Level0 : MonoBehaviour
                 {
                     /* Debug.Log("No Chunk Found on position: " + (chunk.Position + NearestChunks[i]));
                     And so make it exist */
+                    HeighestId++;
                     int Dir = Random.Range(-1, 2);
-                    FoundChunk = new NewChunk((chunk.Position + NearestChunks[i]), Quaternion.Euler(0, 90f * Dir, 0), "temp");
+                    FoundChunk = new NewChunk((chunk.Position + NearestChunks[i]), Quaternion.Euler(0, 90f * Dir, 0), "temp", HeighestId);
                     SpawnChunks.Add(FoundChunk);
                 }
             }
             else
             {
                 int RandomDir = Random.Range(0, NearestChunks.Length);
-                tempFoundint = GetChunkIDWithSamePosition(chunk.Position + NearestChunks[RandomDir] * 2);
+                tempFoundint = GetChunkListIDWithSamePosition(chunk.Position + NearestChunks[RandomDir] * 2, SpawnChunks);
                 if (tempFoundint < SpawnChunks.Count && tempFoundint != -1)
                 {
                     FoundChunk = SpawnChunks[tempFoundint];
@@ -228,7 +246,7 @@ public class Level0 : MonoBehaviour
                 {
                     FoundChunk.Biome = chunk.Biome;
                     FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
-                    SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)] = FoundChunk;
+                    SpawnChunks[GetChunkListIDWithSamePosition(FoundChunk.Position, SpawnChunks)] = FoundChunk;
                     if (FoundChunk.DistanceFromOrigin - 1 > 0)
                     {
                         NextChunks.Add(FoundChunk);
@@ -240,7 +258,7 @@ public class Level0 : MonoBehaviour
                     {
                         FoundChunk.Biome = chunk.Biome;
                         FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
-                        SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)] = FoundChunk;
+                        SpawnChunks[GetChunkListIDWithSamePosition(FoundChunk.Position, SpawnChunks)] = FoundChunk;
                         if (FoundChunk.DistanceFromOrigin - 1 > 0)
                         {
                             NextChunks.Add(FoundChunk);
@@ -249,7 +267,7 @@ public class Level0 : MonoBehaviour
                     {
                         FoundChunk.Biome = chunk.Biome;
                         FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
-                        SpawnChunks[GetChunkIDWithSamePosition(FoundChunk.Position)] = FoundChunk;
+                        SpawnChunks[GetChunkListIDWithSamePosition(FoundChunk.Position, SpawnChunks)] = FoundChunk;
                         if (FoundChunk.DistanceFromOrigin - 1 > 0)
                         {
                             NextChunks.Add(FoundChunk);
@@ -263,7 +281,112 @@ public class Level0 : MonoBehaviour
         // remove from current info of growing
         for (int i = 0; i < NextChunks.Count; i++)
         {
-            GrowBiome(NextChunks[i]);
+            GrowBiomeSpawn(NextChunks[i]);
+        }
+        int index = CurrentBiomeGrowings.IndexOf(false);
+        if (index != -1)
+        {
+            CurrentBiomeGrowings.RemoveAt(index);
+            CurrentBiomeGrowings.Insert(index, true);
+        }
+    }
+
+    public void GrowBiomeNewChunks(NewChunk chunk)
+    {
+        CurrentBiomeGrowings.Add(false);
+
+
+        Vector3[] NearestChunks = {
+            new Vector3(Distance.x, 0, 0),
+            new Vector3(-Distance.x, 0, 0),
+            new Vector3(0, 0, Distance.z),
+            new Vector3(0, 0, -Distance.z),
+            new Vector3(Distance.x, 0, -Distance.z),
+            new Vector3(-Distance.x, 0, -Distance.z),
+            new Vector3(-Distance.x, 0, Distance.z),
+            new Vector3(Distance.x, 0, Distance.z),
+        };
+        List<NewChunk> NextChunks = new List<NewChunk>();
+        for (int i = 0; i < NearestChunks.Length + 1; i++)
+        {
+            NewChunk FoundChunk = new NewChunk(Vector3.zero, new Quaternion(0, 0, 0, 0), "temp", -1);
+            int tempFoundint = -1;
+            // Go through all directions + a random one extra
+            if (i != NearestChunks.Length)
+            {
+                tempFoundint = GetChunkListIDWithSamePosition(chunk.Position + NearestChunks[i], AllChunks);
+                if (tempFoundint < AllChunks.Count && tempFoundint != -1)
+                {
+                    FoundChunk = AllChunks[tempFoundint];
+                }
+                else
+                {
+                    /* Debug.Log("No Chunk Found on position: " + (chunk.Position + NearestChunks[i]));
+                    And so make it exist */
+                    HeighestId++;
+                    int Dir = Random.Range(-1, 2);
+                    FoundChunk = new NewChunk((chunk.Position + NearestChunks[i]), Quaternion.Euler(0, 90f * Dir, 0), "temp", HeighestId);
+                    AllChunks.Add(FoundChunk);
+                }
+            }
+            else
+            {
+                int RandomDir = Random.Range(0, NearestChunks.Length);
+                tempFoundint = GetChunkListIDWithSamePosition(chunk.Position + NearestChunks[RandomDir] * 2, AllChunks);
+                if (tempFoundint < AllChunks.Count && tempFoundint != -1)
+                {
+                    FoundChunk = AllChunks[tempFoundint];
+                }/*
+                else
+                {
+                    Debug.Log("No Chunk Found on position, that was chosen with random Dir: " + (chunk.Position + NearestChunks[RandomDir] * 2));
+                }*/
+            }
+
+            // if growable, then grow
+            if (tempFoundint < AllChunks.Count && tempFoundint != -1)
+            {
+                if (FoundChunk.Biome == "temp")
+                {
+                    FoundChunk.Biome = chunk.Biome;
+                    FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
+                    AllChunks[GetChunkListIDWithSamePosition(FoundChunk.Position, AllChunks)] = FoundChunk;
+                    if (FoundChunk.DistanceFromOrigin - 1 > 0)
+                    {
+                        NextChunks.Add(FoundChunk);
+                    }
+                }
+                else
+                {
+                    if (GetChanceByBiomeName(chunk.Biome) < GetChanceByBiomeName(FoundChunk.Biome))
+                    {
+                        FoundChunk.Biome = chunk.Biome;
+                        FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
+                        AllChunks[GetChunkListIDWithSamePosition(FoundChunk.Position, AllChunks)] = FoundChunk;
+                        if (FoundChunk.DistanceFromOrigin - 1 > 0)
+                        {
+                            NextChunks.Add(FoundChunk);
+                        }
+                    }
+                    else if (chunk.DistanceFromOrigin - 1 > FoundChunk.DistanceFromOrigin)
+                    {
+                        FoundChunk.Biome = chunk.Biome;
+                        FoundChunk.DistanceFromOrigin = chunk.DistanceFromOrigin - 1;
+                        AllChunks[GetChunkListIDWithSamePosition(FoundChunk.Position, AllChunks)] = FoundChunk;
+                        if (FoundChunk.DistanceFromOrigin - 1 > 0)
+                        {
+                            NextChunks.Add(FoundChunk);
+                        }
+                    }
+                }
+
+            }
+        }
+
+        // remove from current info of growing
+        for (int i = 0; i < NextChunks.Count; i++)
+        {
+            GrowBiomeNewChunks(NextChunks[i]);
         }
         int index = CurrentBiomeGrowings.IndexOf(false);
         if (index != -1)
@@ -276,18 +399,18 @@ public class Level0 : MonoBehaviour
     void Start()
     {
         // Make spawn Chunks
-        for (int i = 0 - (size / 2); i < (size / 2); i++)
+        for (int i = 0 - (sizeSpawnChunks / 2); i < (sizeSpawnChunks / 2); i++)
         {
-            for (int j = 0 - (size / 2); j < (size / 2); j++)
+            for (int j = 0 - (sizeSpawnChunks / 2); j < (sizeSpawnChunks / 2); j++)
             {
+                HeighestId++;
                 int Dir = Random.Range(-1, 2);
-                SpawnChunks.Add(new NewChunk(new Vector3(i * Distance.x, 0, j * Distance.z), Quaternion.Euler(0, 90f * Dir, 0), "temp"));
+                SpawnChunks.Add(new NewChunk(new Vector3(i * Distance.x, 0, j * Distance.z), Quaternion.Euler(0, 90f * Dir, 0), "temp", HeighestId));
             }
         }
-
         // Create Biome Origin Points
-        List<NewChunk> AllOfTempBiomeType = GetAllOfBiomeType("temp");
-        for (int x = 0; x < size * 0.2; x++)
+        List<NewChunk> AllOfTempBiomeType = GetAllOfBiomeType("temp", SpawnChunks);
+        for (int x = 0; x < sizeSpawnChunks * 0.2; x++)
         {
             if (CurrentBiomeGrowings.IndexOf(false) == -1)
             {
@@ -302,15 +425,15 @@ public class Level0 : MonoBehaviour
                 // Set Biome
                 Origin.Biome = GeneratedBiome.BiomeName;
                 Origin.DistanceFromOrigin = Random.Range(GeneratedBiome.MaxAmountChunks[0], GeneratedBiome.MaxAmountChunks[1]);
-                SpawnChunks[GetChunkIDWithSamePosition(Origin.Position)] = Origin;
+                SpawnChunks[GetChunkListIDWithSamePosition(Origin.Position, SpawnChunks)] = Origin;
 
                 // Grow Biome
-                GrowBiome(Origin);
+                GrowBiomeSpawn(Origin);
 
                 //Again If needed
-                if (DoesSpawnChunksContainBiome("temp") == true)
+                if (DoesChunksContainBiome("temp", SpawnChunks) == true)
                 {
-                    AllOfTempBiomeType = GetAllOfBiomeType("temp");
+                    AllOfTempBiomeType = GetAllOfBiomeType("temp", SpawnChunks);
                 }
                 else
                 {
@@ -327,10 +450,142 @@ public class Level0 : MonoBehaviour
                 SpawnChunks[i].Biome = "default";
             }
             Chunk RandomChunk = GetRandomChunk(Chunks, SpawnChunks[i].Biome);
-            GameObject Chunk = Instantiate(RandomChunk.ChunkObject, SpawnChunks[i].Position, SpawnChunks[i].Rotation);
+            GameObject Chunk = Instantiate(RandomChunk.ChunkObject, SpawnChunks[i].Position, SpawnChunks[i].Rotation, this.gameObject.transform);
             Chunk.GetComponent<ChunkInfo>().BiomeName = SpawnChunks[i].Biome;
             Chunk.GetComponent<ChunkInfo>().DistanceFromOriginPoint = SpawnChunks[i].DistanceFromOrigin;
+            Chunk.GetComponent<ChunkInfo>().Id = SpawnChunks[i].Id;
             GameObject RoofTile = Instantiate(ChunkRoofTiles[0], ChunkRoofTiles[0].transform.position + Chunk.transform.position, ChunkRoofTiles[0].transform.rotation, Chunk.transform);
+        }
+        AllChunks = SpawnChunks;
+        CurrentChunkPos = NearestChunkPosition(Player.transform.position);
+        LatestCurrentChunkPos = CurrentChunkPos;
+    }
+
+    private void Update()
+    {
+        CurrentChunkPos = NearestChunkPosition(Player.transform.position);
+    }
+
+    private void FixedUpdate()
+    {
+        if (DoesChunksContainBiome("temp", AllChunks))
+        {
+            List<NewChunk> TempChunks = GetAllOfBiomeType("temp", AllChunks);
+        }
+
+        if (CurrentChunkPos != LatestCurrentChunkPos)
+        {
+
+            // make new chunks in renderdistance that do nor already exist
+            for (int i = 0 - (sizeRenderDistance / 2); i < (sizeRenderDistance / 2); i++)
+            {
+                for (int j = 0 - (sizeRenderDistance / 2); j < (sizeRenderDistance / 2); j++)
+                {
+                    Vector3 ChunkPos = new Vector3((CurrentChunkPos.x + i) * Distance.x, 0, (CurrentChunkPos.z + j) * Distance.z);
+                    if (GetChunkListIDWithSamePosition(ChunkPos, AllChunks) == -1 && GetChunkListIDWithSamePosition(ChunkPos, NewChunks) == -1)
+                    {
+                        HeighestId++;
+                        int Dir = Random.Range(-1, 2);
+                        NewChunks.Add(new NewChunk(ChunkPos, Quaternion.Euler(0, 90f * Dir, 0), "temp", HeighestId));
+                        AllChunks.Add(new NewChunk(ChunkPos, Quaternion.Euler(0, 90f * Dir, 0), "temp", HeighestId));
+                    }
+                }
+            }
+
+            // Grow Touching Biomes if possible
+            Vector3[] NearestChunks = {
+                new Vector3(Distance.x, 0, 0),
+                new Vector3(-Distance.x, 0, 0),
+                new Vector3(0, 0, Distance.z),
+                new Vector3(0, 0, -Distance.z),
+                new Vector3(Distance.x, 0, -Distance.z),
+                new Vector3(-Distance.x, 0, -Distance.z),
+                new Vector3(-Distance.x, 0, Distance.z),
+                new Vector3(Distance.x, 0, Distance.z)
+            };
+
+            for (int i = 0; i < NewChunks.Count; i++)
+            {
+                for (int j = 0; j < NearestChunks.Length; j++)
+                {
+                    int IndexPositionNeighboringChunk = GetChunkListIDWithSamePosition((NearestChunks[j] + NewChunks[i].Position), AllChunks);
+                    if (IndexPositionNeighboringChunk != -1)
+                    {
+                        NewChunk NeighboringChunk = AllChunks[IndexPositionNeighboringChunk];
+                        if (NeighboringChunk.Biome != "temp")
+                        {
+                            GrowBiomeNewChunks(NeighboringChunk);
+                        }
+                    }
+                    else if (GetChunkListIDWithSamePosition((NearestChunks[j] + NewChunks[i].Position), NewChunks) == -1)
+                    {
+                        HeighestId++;
+                        int Dir = Random.Range(-1, 2);
+                        NewChunks.Add(new NewChunk((NearestChunks[j] + NewChunks[i].Position), Quaternion.Euler(0, 90f * Dir, 0), "temp", HeighestId));
+                        AllChunks.Add(new NewChunk((NearestChunks[j] + NewChunks[i].Position), Quaternion.Euler(0, 90f * Dir, 0), "temp", HeighestId));
+                    }
+                }
+            }
+
+
+
+            //Grow new Biomes
+            // Create Biome Origin Points
+            
+            List<NewChunk> AllOfTempBiomeType = GetAllOfBiomeType("temp", NewChunks);
+            if (AllOfTempBiomeType.Count > 0)
+            {
+                for (int x = 0; x < sizeRenderDistance * 0.2; x++)
+                {
+                    if (CurrentBiomeGrowings.IndexOf(false) == -1)
+                    {
+                        // Pick Random Origin
+                        int OriginID = Random.Range(0, AllOfTempBiomeType.Count);
+                        NewChunk Origin = AllOfTempBiomeType[OriginID];
+                        AllOfTempBiomeType.Remove(Origin);
+
+                        // Get RandomBiome
+                        Biome GeneratedBiome = GetRandomBiome(Biomes);
+
+                        // Set Biome
+                        Origin.Biome = GeneratedBiome.BiomeName;
+                        Origin.DistanceFromOrigin = Random.Range(GeneratedBiome.MaxAmountChunks[0], GeneratedBiome.MaxAmountChunks[1]);
+                        NewChunks[GetChunkListIDWithSamePosition(Origin.Position, NewChunks)] = Origin;
+
+                        // Grow Biome
+                        GrowBiomeNewChunks(Origin);
+
+                        //Again If needed
+                        if (DoesChunksContainBiome("temp", NewChunks) == true)
+                        {
+                            AllOfTempBiomeType = GetAllOfBiomeType("temp", NewChunks);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            // Generate Chunks
+            for (int i = 0; i < NewChunks.Count; i++)
+            {
+                Debug.Log(NewChunks[i].Id);
+                if (NewChunks[i].Biome != "temp")
+                {
+                    Chunk RandomChunk = GetRandomChunk(Chunks, NewChunks[i].Biome);
+                    GameObject Chunk = Instantiate(RandomChunk.ChunkObject, NewChunks[i].Position, NewChunks[i].Rotation, this.gameObject.transform);
+                    Chunk.GetComponent<ChunkInfo>().BiomeName = NewChunks[i].Biome;
+                    Chunk.GetComponent<ChunkInfo>().DistanceFromOriginPoint = NewChunks[i].DistanceFromOrigin;
+                    Chunk.GetComponent<ChunkInfo>().Id = NewChunks[i].Id;
+                    GameObject RoofTile = Instantiate(ChunkRoofTiles[0], ChunkRoofTiles[0].transform.position + Chunk.transform.position, ChunkRoofTiles[0].transform.rotation, Chunk.transform);
+                    NewChunks.RemoveAt(i);
+                }
+            }
+
+            LatestCurrentChunkPos = CurrentChunkPos;
         }
     }
 }
