@@ -230,18 +230,44 @@ MonoBehaviour:
   - ChunkObject: {fileID: 1126575079584258670, guid: 895d1b94a955d4c0383cabbd0c7bf057, type: 3}
     Chances:
     - BiomeName: default
-      Chance: 10
+      Chance: 30
     - BiomeName: Pillars
       Chance: 0
     - BiomeName: Empty
+      Chance: 0
+    - BiomeName: default2
+      Chance: 0
+    - BiomeName: default3
+      Chance: 0
+    - BiomeName: Pillars2
       Chance: 0
   - ChunkObject: {fileID: 897410959626341425, guid: e3800d9a658534c7487e5b22bff125ef, type: 3}
     Chances:
     - BiomeName: default
-      Chance: 20
+      Chance: 0
     - BiomeName: Pillars
       Chance: 0
     - BiomeName: Empty
+      Chance: 0
+    - BiomeName: default2
+      Chance: 30
+    - BiomeName: default3
+      Chance: 0
+    - BiomeName: Pillars2
+      Chance: 0
+  - ChunkObject: {fileID: 1597601284339705918, guid: 83bbf9729ad8443a6b9e2e6bb1752de1, type: 3}
+    Chances:
+    - BiomeName: default
+      Chance: 0
+    - BiomeName: Pillars
+      Chance: 0
+    - BiomeName: Empty
+      Chance: 0
+    - BiomeName: default2
+      Chance: 0
+    - BiomeName: default3
+      Chance: 30
+    - BiomeName: Pillars2
       Chance: 0
   - ChunkObject: {fileID: 2803190014333583614, guid: abbff129c8bda4d89996338b92cdbcad, type: 3}
     Chances:
@@ -251,6 +277,12 @@ MonoBehaviour:
       Chance: 20
     - BiomeName: Empty
       Chance: 100
+    - BiomeName: default2
+      Chance: 70
+    - BiomeName: default3
+      Chance: 70
+    - BiomeName: Pillars2
+      Chance: 20
   - ChunkObject: {fileID: 7216173035905359406, guid: c4c09d40f673e4733a0272dd0de66718, type: 3}
     Chances:
     - BiomeName: default
@@ -259,20 +291,41 @@ MonoBehaviour:
       Chance: 70
     - BiomeName: Empty
       Chance: 0
+    - BiomeName: default2
+      Chance: 0
+    - BiomeName: default3
+      Chance: 0
+    - BiomeName: Pillars2
+      Chance: 0
   - ChunkObject: {fileID: 1836615488157565931, guid: b60ef53e4b7a542e5b0c802fed9e5f36, type: 3}
     Chances:
     - BiomeName: default
       Chance: 0
-    - BiomeName: Pillars
-      Chance: 10
     - BiomeName: Empty
       Chance: 0
+    - BiomeName: default2
+      Chance: 0
+    - BiomeName: default3
+      Chance: 0
+    - BiomeName: Pillars
+      Chance: 0
+    - BiomeName: Pillars2
+      Chance: 70
   Biomes:
   - BiomeName: default
-    ChanceOfBiome: 65
+    ChanceOfBiome: 21
+    MaxAmountChunks: 070000000e000000
+  - BiomeName: default2
+    ChanceOfBiome: 21
+    MaxAmountChunks: 070000000e000000
+  - BiomeName: default3
+    ChanceOfBiome: 21
     MaxAmountChunks: 070000000e000000
   - BiomeName: Pillars
-    ChanceOfBiome: 25
+    ChanceOfBiome: 12
+    MaxAmountChunks: 0500000007000000
+  - BiomeName: Pillars2
+    ChanceOfBiome: 12
     MaxAmountChunks: 0500000007000000
   - BiomeName: Empty
     ChanceOfBiome: 10
