@@ -330,6 +330,10 @@ MonoBehaviour:
   - BiomeName: Empty
     ChanceOfBiome: 10
     MaxAmountChunks: 070000000c000000
+  Walls:
+  - {fileID: 2812601638793136418, guid: eaa1e56c7234c474689006ed73deb7ef, type: 3}
+  - {fileID: 613280867149872474, guid: dc8436b7c09a9419e9bcc6e01337fb50, type: 3}
+  - {fileID: 7331889566382806776, guid: bc73a559d248b4b90a686b198e491273, type: 3}
   tempVisualizer: {fileID: 2602092784120847277, guid: 7f73009daca214017bbb659eb45ea610, type: 3}
   Distance: {x: 10, y: 20, z: 10}
   sizeSpawnChunks: 40
