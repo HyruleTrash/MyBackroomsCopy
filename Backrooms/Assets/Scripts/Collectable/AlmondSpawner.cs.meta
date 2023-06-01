@@ -3,7 +3,9 @@ guid: d38b78b5e48c546869ba46e881c6dfee
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - AlmondCollectable: {fileID: 3806848834945555432, guid: 175e2f3bb74464b24a5464d469a6aa81, type: 3}
+  - StatTracker: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

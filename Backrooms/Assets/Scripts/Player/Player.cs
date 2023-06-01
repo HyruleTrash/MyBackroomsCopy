@@ -37,11 +37,13 @@ public class Player : MonoBehaviour
 
     public bool canMove = true;
 
+    public GameObject StatTracker;
 
 
 
     void Start()
     {
+        StatTracker = GameObject.Find("StatTracker");
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -115,7 +117,13 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        switch (other.name)
+        {
+            case "AlmondWaterCollectable":
+                StatTracker.GetComponent<StatTracker>().AddAlmondWaterCollect();
+                GameObject.Destroy(other.gameObject);
+                break;
+        }
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {

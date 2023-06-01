@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class StatTracker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int CollectedAlmondWater;
+    public int ToBeCollectedAlmondWater;
+
+    float _Time;
+    bool IsTiming = false;
+    float MaxTime = 2;
+
+    private void Update()
     {
-        
+        if (IsTiming == true)
+        {
+            _Time += Time.deltaTime;
+            if (_Time >= MaxTime)
+            {
+                IsTiming = false;
+                _Time = 0;
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddAlmondWaterCollect()
     {
-        
+        if (!IsTiming)
+        {
+            CollectedAlmondWater++;
+            IsTiming = true;
+        }
     }
 }
