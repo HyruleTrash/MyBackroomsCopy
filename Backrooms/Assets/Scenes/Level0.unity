@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ff6b8f47d344c64a8b02f8211cfa87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 58393495}
   StatTracker: {fileID: 0}
   Text: {fileID: 60615399}
 --- !u!1 &171087502

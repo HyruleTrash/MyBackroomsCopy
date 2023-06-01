@@ -16,7 +16,6 @@ public class AlmondUI : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Player");
         StatTracker = GameObject.Find("StatTracker");
         Offset = gameObject.GetComponent<RectTransform>().position;
     }
