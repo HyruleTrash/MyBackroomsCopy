@@ -68,6 +68,7 @@ GameObject:
   - component: {fileID: 1484468310212592733}
   - component: {fileID: 8734541776028203317}
   - component: {fileID: 5361045951457622186}
+  - component: {fileID: 5054995597584338456}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -154,6 +155,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5054995597584338456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6329767227640278335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41688a682088a4bb5b84ccf715f25443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  White: {fileID: 2100000, guid: ac2f51faf22ba4c29a5a477218ecbe29, type: 2}
+  originalMaterials: []
+  MaxtimeBetweenShifts: 2
+  MintimeBetweenShifts: 1
 --- !u!1001 &203926919703601080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -553,6 +570,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: a949af9ce6f504deca850c0517ad3a02, type: 3}
+--- !u!114 &1064321996537032521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077934042349318137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41688a682088a4bb5b84ccf715f25443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  White: {fileID: 2100000, guid: ac2f51faf22ba4c29a5a477218ecbe29, type: 2}
+  originalMaterials: []
+  MaxtimeBetweenShifts: 2
+  MintimeBetweenShifts: 1
 --- !u!1001 &3412521242548993301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -650,6 +683,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: a949af9ce6f504deca850c0517ad3a02, type: 3}
+--- !u!114 &8355171246755121875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2565605021535584324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41688a682088a4bb5b84ccf715f25443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  White: {fileID: 2100000, guid: ac2f51faf22ba4c29a5a477218ecbe29, type: 2}
+  originalMaterials: []
+  MaxtimeBetweenShifts: 2
+  MintimeBetweenShifts: 1
 --- !u!4 &2941145776017251070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a949af9ce6f504deca850c0517ad3a02, type: 3}
@@ -752,6 +801,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: a949af9ce6f504deca850c0517ad3a02, type: 3}
+--- !u!114 &4141038419798186607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541083795658801423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41688a682088a4bb5b84ccf715f25443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  White: {fileID: 2100000, guid: ac2f51faf22ba4c29a5a477218ecbe29, type: 2}
+  originalMaterials: []
+  MaxtimeBetweenShifts: 2
+  MintimeBetweenShifts: 1
 --- !u!4 &4210764908747479989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a949af9ce6f504deca850c0517ad3a02, type: 3}
@@ -958,3 +1023,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: a949af9ce6f504deca850c0517ad3a02, type: 3}
+--- !u!114 &2296293114380576254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8922264967234621487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41688a682088a4bb5b84ccf715f25443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  White: {fileID: 2100000, guid: ac2f51faf22ba4c29a5a477218ecbe29, type: 2}
+  originalMaterials: []
+  MaxtimeBetweenShifts: 2
+  MintimeBetweenShifts: 1
