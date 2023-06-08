@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class StatTracker : MonoBehaviour
 {
@@ -11,14 +13,19 @@ public class StatTracker : MonoBehaviour
     bool IsTiming = false;
     float MaxTime = 2;
 
+    public GameObject RedFilter;
+
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         CollectedAlmondWater = ToBeCollectedAlmondWater;
     }
 
     private void Update()
     {
+        
         CollectedAlmondWater -= 0.1f * Time.deltaTime;
+        RedFilter.GetComponent<UnityEngine.Rendering.PostProcessing.PostProcessVolume>().weight = Mathf.Abs(CollectedAlmondWater / ToBeCollectedAlmondWater - 1);
         if (IsTiming == true)
         {
             _Time += Time.deltaTime;
@@ -30,15 +37,15 @@ public class StatTracker : MonoBehaviour
         }
         if (CollectedAlmondWater <= 0)
         {
-            //AppHelper.Quit();
+            AppHelper.Quit();
         }
     }
 
-    public void AddAlmondWaterCollect()
+    public void AddAlmondWaterCollect(int amount)
     {
         if (!IsTiming)
         {
-            CollectedAlmondWater++;
+            CollectedAlmondWater += amount;
             if (CollectedAlmondWater >= ToBeCollectedAlmondWater)
             {
                 CollectedAlmondWater = ToBeCollectedAlmondWater;

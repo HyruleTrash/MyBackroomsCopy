@@ -22,7 +22,7 @@ public class SceneTransitionThingy : MonoBehaviour
                 originalMaterials.Add(gameObject.GetComponent<MeshRenderer>().materials[i]);
             }
             isTransitionOrNot = true;
-            Debug.Log(transform.parent.GetComponent<ChunkInfo>().Id);
+            //Debug.Log(transform.parent.GetComponent<ChunkInfo>().Id);
         }
     }
 

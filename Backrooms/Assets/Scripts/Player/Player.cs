@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         StatTracker = GameObject.Find("StatTracker");
+        StatTracker.GetComponent<StatTracker>().CollectedAlmondWater = StatTracker.GetComponent<StatTracker>().ToBeCollectedAlmondWater;
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -120,7 +121,7 @@ public class Player : MonoBehaviour
         switch (other.name)
         {
             case "AlmondWaterCollectable":
-                StatTracker.GetComponent<StatTracker>().AddAlmondWaterCollect();
+                StatTracker.GetComponent<StatTracker>().AddAlmondWaterCollect(2);
                 GameObject.Destroy(other.gameObject);
                 break;
         }
