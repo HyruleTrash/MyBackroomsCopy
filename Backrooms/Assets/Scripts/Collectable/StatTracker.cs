@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class StatTracker : MonoBehaviour
 {
-    public int CollectedAlmondWater;
-    public int ToBeCollectedAlmondWater;
+    public float CollectedAlmondWater = 20;
+    public float ToBeCollectedAlmondWater = 20;
 
     float _Time;
     bool IsTiming = false;
     float MaxTime = 2;
 
+    private void Start()
+    {
+        CollectedAlmondWater = ToBeCollectedAlmondWater;
+    }
+
     private void Update()
     {
+        CollectedAlmondWater -= 0.1f * Time.deltaTime;
         if (IsTiming == true)
         {
             _Time += Time.deltaTime;
@@ -23,6 +28,10 @@ public class StatTracker : MonoBehaviour
                 _Time = 0;
             }
         }
+        if (CollectedAlmondWater <= 0)
+        {
+            //AppHelper.Quit();
+        }
     }
 
     public void AddAlmondWaterCollect()
@@ -30,9 +39,9 @@ public class StatTracker : MonoBehaviour
         if (!IsTiming)
         {
             CollectedAlmondWater++;
-            if (CollectedAlmondWater == ToBeCollectedAlmondWater)
+            if (CollectedAlmondWater >= ToBeCollectedAlmondWater)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                CollectedAlmondWater = ToBeCollectedAlmondWater;
             }
             IsTiming = true;
         }

@@ -12,7 +12,6 @@ public class AlmondSpawner : MonoBehaviour
         StatTracker = GameObject.Find("StatTracker");
         if (Random.Range(0, 92) < 1)
         {
-            StatTracker.GetComponent<StatTracker>().ToBeCollectedAlmondWater++;
             Instantiate(AlmondCollectable, transform);
         }
     }

@@ -5,27 +5,30 @@ using UnityEngine;
 public class SceneTransitionThingy : MonoBehaviour
 {
     public Material White;
-    public Material[] originalMaterials;
-    bool isTransitionOrNot = false;
+    public List<Material> originalMaterials = new List<Material>();
+    public bool isTransitionOrNot = false;
     bool isWhite = false;
     float _Time = 0;
     float timeBetweenShift = 0;
-    public float MaxtimeBetweenShifts = 2;
-    public float MintimeBetweenShifts = 1;
+    public float MaxtimeBetweenShifts = 0.02f;
+    public float MintimeBetweenShifts = 0.01f;
 
     void Start()
     {
-        if (Random.Range(0, 92) < 1)
+        if (Random.Range(0, (2400 / 5)) < 1)
         {
-            originalMaterials = gameObject.GetComponent<MeshRenderer>().materials;
+            for (int i = 0; i < gameObject.GetComponent<MeshRenderer>().materials.Length; i++)
+            {
+                originalMaterials.Add(gameObject.GetComponent<MeshRenderer>().materials[i]);
+            }
             isTransitionOrNot = true;
-            Debug.Log(transform.parent.gameObject.GetComponent<ChunkInfo>().Id);
+            Debug.Log(transform.parent.GetComponent<ChunkInfo>().Id);
         }
     }
 
     void Update()
     {
-        if (isTransitionOrNot == true)
+        if (isTransitionOrNot == true && transform.GetComponent<MeshRenderer>().isVisible)
         {
             if (timeBetweenShift == 0)
             {
@@ -38,16 +41,16 @@ public class SceneTransitionThingy : MonoBehaviour
             {
                 _Time = 0;
                 timeBetweenShift = 0;
+                isWhite = !isWhite;
+
+                Material[] toChange = gameObject.GetComponent<MeshRenderer>().materials;
                 if (isWhite)
                 {
-                    gameObject.GetComponent<MeshRenderer>().materials = originalMaterials;
+                    gameObject.GetComponent<MeshRenderer>().material = originalMaterials[0];
                 }
                 else
                 {
-                    for (int i = 0; i < gameObject.GetComponent<MeshRenderer>().materials.Length; i++)
-                    {
-                        gameObject.GetComponent<MeshRenderer>().materials[i] = White;
-                    }
+                    gameObject.GetComponent<MeshRenderer>().material = White;
                 }
             }
         }

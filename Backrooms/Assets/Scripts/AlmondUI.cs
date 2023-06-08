@@ -22,8 +22,8 @@ public class AlmondUI : MonoBehaviour
 
     private void Update()
     {
-        CollectedAlmondWater = StatTracker.GetComponent<StatTracker>().CollectedAlmondWater;
-        ToBeCollectedAlmondWater = StatTracker.GetComponent<StatTracker>().ToBeCollectedAlmondWater;
+        CollectedAlmondWater = (int)StatTracker.GetComponent<StatTracker>().CollectedAlmondWater;
+        ToBeCollectedAlmondWater = (int)StatTracker.GetComponent<StatTracker>().ToBeCollectedAlmondWater;
 
         Text.text = CollectedAlmondWater + " / " + ToBeCollectedAlmondWater;
 

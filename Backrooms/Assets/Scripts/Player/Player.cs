@@ -127,7 +127,10 @@ public class Player : MonoBehaviour
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        
+        if (hit.gameObject.GetComponent<SceneTransitionThingy>() && hit.gameObject.GetComponent<SceneTransitionThingy>().isTransitionOrNot)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void Use()

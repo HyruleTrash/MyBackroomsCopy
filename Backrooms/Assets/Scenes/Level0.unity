@@ -1202,7 +1202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollectedAlmondWater: 0
-  ToBeCollectedAlmondWater: 0
+  ToBeCollectedAlmondWater: 20
 --- !u!4 &344332958
 Transform:
   m_ObjectHideFlags: 0
