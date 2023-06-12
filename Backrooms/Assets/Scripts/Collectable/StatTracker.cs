@@ -9,6 +9,11 @@ public class StatTracker : MonoBehaviour
     public float CollectedAlmondWater = 20;
     public float ToBeCollectedAlmondWater = 20;
 
+    public string[] Levels;
+    public int CurrentLevel = 0;
+    public string CurrentSceneName = "Level0";
+    public bool AllowedToCountUpALevel = true;
+
     float _Time;
     bool IsTiming = false;
     float MaxTime = 2;
@@ -39,6 +44,13 @@ public class StatTracker : MonoBehaviour
         {
             AppHelper.Quit();
         }
+
+        if (AllowedToCountUpALevel == false && CurrentSceneName != SceneManager.GetActiveScene().name)
+        {
+            AllowedToCountUpALevel = true;
+        }
+
+        CurrentSceneName = SceneManager.GetActiveScene().name;
     }
 
     public void AddAlmondWaterCollect(int amount)
@@ -51,6 +63,24 @@ public class StatTracker : MonoBehaviour
                 CollectedAlmondWater = ToBeCollectedAlmondWater;
             }
             IsTiming = true;
+        }
+    }
+
+    public void NextLevel()
+    {
+        if (AllowedToCountUpALevel == true)
+        {
+            CurrentLevel++;
+            AllowedToCountUpALevel = false;
+            if (Levels.Length > CurrentLevel && CurrentLevel != 0)
+            {
+                Debug.Log(SceneManager.GetActiveScene().name);
+                SceneManager.LoadScene(Levels[CurrentLevel]);
+            }
+            else
+            {
+                AppHelper.Quit();
+            }
         }
     }
 }

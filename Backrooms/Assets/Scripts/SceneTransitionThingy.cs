@@ -13,9 +13,11 @@ public class SceneTransitionThingy : MonoBehaviour
     public float MaxtimeBetweenShifts = 0.02f;
     public float MintimeBetweenShifts = 0.01f;
 
+    public int OneOutofThe = 300;
+
     void Start()
     {
-        if (Random.Range(0, (2400 / 5)) < 1)
+        if (Random.Range(0, OneOutofThe) < 1)
         {
             for (int i = 0; i < gameObject.GetComponent<MeshRenderer>().materials.Length; i++)
             {

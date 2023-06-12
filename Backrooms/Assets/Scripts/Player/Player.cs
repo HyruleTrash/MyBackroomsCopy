@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
     {
         if (hit.gameObject.GetComponent<SceneTransitionThingy>() && hit.gameObject.GetComponent<SceneTransitionThingy>().isTransitionOrNot)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StatTracker.GetComponent<StatTracker>().NextLevel();
         }
     }
 
