@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController))]
 

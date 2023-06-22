@@ -42,7 +42,8 @@ public class StatTracker : MonoBehaviour
         }
         if (CollectedAlmondWater <= 0)
         {
-            AppHelper.Quit();
+            SceneManager.LoadScene("Menu");
+            Destroy(gameObject);
         }
 
         if (AllowedToCountUpALevel == false && CurrentSceneName != SceneManager.GetActiveScene().name)
